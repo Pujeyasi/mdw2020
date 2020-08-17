@@ -113,9 +113,6 @@
 					"FileServercoffee_password": {
 						"value": "[parameters('FileServercoffee_password')]"
 					},
-					"onPremSQL_connectionString": {
-						"value": "[parameters('onPremSQL_connectionString')]"
-					},
 					"FileServercoffee_properties_typeProperties_host": {
 						"value": "[parameters('FileServercoffee_properties_typeProperties_host')]"
 					},
@@ -141,6 +138,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"onPremSQL_connectionString": {
+						"value": "[parameters('onPremSQL_connectionString')]"
 					}
 				}
 			},
