@@ -1,0 +1,39 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "dfhack2020"
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase2_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase3_connectionString": {
+			"value": ""
+		},
+		"CosmosDb1_connectionString": {
+			"value": ""
+		},
+		"FileServercoffee_password": {
+			"value": ""
+		},
+		"onPremSQL_connectionString": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://storagedatalake2020v2.dfs.core.windows.net"
+		},
+		"FileServercoffee_properties_typeProperties_host": {
+			"value": "c:\\Rentals"
+		},
+		"FileServercoffee_properties_typeProperties_userId": {
+			"value": "openhackadmin"
+		}
+	}
+}
