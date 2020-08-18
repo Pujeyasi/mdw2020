@@ -1,0 +1,16 @@
+{
+	"name": "DestinationDataset_m35",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSynapseAnalytics1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "customers",
+			"table": "Azure Data Lake Storage Gen2 file"
+		}
+	}
+}
