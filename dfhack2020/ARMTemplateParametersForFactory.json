@@ -17,10 +17,16 @@
 		"AzureSqlDatabase3_connectionString": {
 			"value": ""
 		},
+		"AzureSynapseAnalytics1_connectionString": {
+			"value": ""
+		},
 		"CosmosDb1_connectionString": {
 			"value": ""
 		},
 		"FileServercoffee_password": {
+			"value": ""
+		},
+		"azuredatalakegen2linked_connectionString": {
 			"value": ""
 		},
 		"onPremSQL_connectionString": {

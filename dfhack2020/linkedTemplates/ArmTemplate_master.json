@@ -23,6 +23,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase3'"
 		},
+		"AzureSynapseAnalytics1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSynapseAnalytics1'"
+		},
 		"CosmosDb1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'CosmosDb1'"
@@ -30,6 +34,10 @@
 		"FileServercoffee_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'FileServercoffee'"
+		},
+		"azuredatalakegen2linked_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'azuredatalakegen2linked'"
 		},
 		"onPremSQL_connectionString": {
 			"type": "secureString",
@@ -86,8 +94,14 @@
 					"AzureSqlDatabase3_connectionString": {
 						"value": "[parameters('AzureSqlDatabase3_connectionString')]"
 					},
+					"AzureSynapseAnalytics1_connectionString": {
+						"value": "[parameters('AzureSynapseAnalytics1_connectionString')]"
+					},
 					"CosmosDb1_connectionString": {
 						"value": "[parameters('CosmosDb1_connectionString')]"
+					},
+					"azuredatalakegen2linked_connectionString": {
+						"value": "[parameters('azuredatalakegen2linked_connectionString')]"
 					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
