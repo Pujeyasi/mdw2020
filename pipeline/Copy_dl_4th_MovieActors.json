@@ -1,0 +1,109 @@
+{
+	"name": "Copy_dl_4th_MovieActors",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_ptr",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "dlfourthcoffee//MovieActors.csv"
+					},
+					{
+						"name": "Destination",
+						"value": ".coffee_MovieActors"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings",
+							"skipLineCount": 0
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "azuredatalakegen2linked",
+							"type": "LinkedServiceReference"
+						}
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "MovieActorID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "MovieActorID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MovieID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "MovieID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ActorID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ActorID",
+									"type": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_ptr",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_ptr",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
