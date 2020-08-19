@@ -1,0 +1,109 @@
+{
+	"name": "Copy_dl_van_movieactors",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_3yi",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "dlvanarsltd//dboMovieActors.txt"
+					},
+					{
+						"name": "Destination",
+						"value": ".van_MovieActors"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings",
+							"skipLineCount": 0
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "azuredatalakegen2linked",
+							"type": "LinkedServiceReference"
+						}
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "MovieActorID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "MovieActorID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MovieID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "MovieID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ActorID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ActorID",
+									"type": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_3yi",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_3yi",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
