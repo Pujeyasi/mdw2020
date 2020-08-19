@@ -13,6 +13,39 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_2gi')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"cw_schema": {
+						"type": "String"
+					},
+					"cw_table": {
+						"type": "String"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().cw_schema",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().cw_table",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SourceDataset_3t1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -789,6 +822,69 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_r2a')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "dboAddresses.txt",
+						"fileSystem": "dlcloudstreaming"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "AddressID",
+						"type": "String"
+					},
+					{
+						"name": "CustomerID",
+						"type": "String"
+					},
+					{
+						"name": "AddressLine1",
+						"type": "String"
+					},
+					{
+						"name": "AddressLine2",
+						"type": "String"
+					},
+					{
+						"name": "City",
+						"type": "String"
+					},
+					{
+						"name": "State",
+						"type": "String"
+					},
+					{
+						"name": "ZipCode",
+						"type": "String"
+					},
+					{
+						"name": "CreatedDate",
+						"type": "String"
+					},
+					{
+						"name": "UpdatedDate",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SourceDataset_x05')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -840,126 +936,6 @@
 						"type": "String"
 					}
 				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_x0z')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "dboAddresses.txt",
-						"fileSystem": "dlcloudsales"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "AddressID",
-						"type": "String"
-					},
-					{
-						"name": "CustomerID",
-						"type": "String"
-					},
-					{
-						"name": "AddressLine1",
-						"type": "String"
-					},
-					{
-						"name": "AddressLine2",
-						"type": "String"
-					},
-					{
-						"name": "City",
-						"type": "String"
-					},
-					{
-						"name": "State",
-						"type": "String"
-					},
-					{
-						"name": "ZipCode",
-						"type": "String"
-					},
-					{
-						"name": "CreatedDate",
-						"type": "String"
-					},
-					{
-						"name": "UpdatedDate",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_xa6')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "CosmosDb1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "CosmosDbSqlApiCollection",
-				"schema": {
-					"type": "object",
-					"properties": {
-						"actors": {
-							"type": "array",
-							"items": {
-								"type": "object",
-								"properties": {
-									"name": {
-										"type": "string"
-									}
-								}
-							}
-						},
-						"availabilityDate": {
-							"type": "string"
-						},
-						"genre": {
-							"type": "string"
-						},
-						"rating": {
-							"type": "string"
-						},
-						"releaseYear": {
-							"type": "integer"
-						},
-						"runtime": {
-							"type": "integer"
-						},
-						"streamingAvailabilityDate": {
-							"type": "string"
-						},
-						"tier": {
-							"type": "integer"
-						},
-						"title": {
-							"type": "string"
-						}
-					}
-				},
-				"typeProperties": {
-					"collectionName": "movies"
-				}
 			},
 			"dependsOn": []
 		}

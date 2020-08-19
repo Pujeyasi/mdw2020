@@ -29,6 +29,126 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_x0z')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "dboAddresses.txt",
+						"fileSystem": "dlcloudsales"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "AddressID",
+						"type": "String"
+					},
+					{
+						"name": "CustomerID",
+						"type": "String"
+					},
+					{
+						"name": "AddressLine1",
+						"type": "String"
+					},
+					{
+						"name": "AddressLine2",
+						"type": "String"
+					},
+					{
+						"name": "City",
+						"type": "String"
+					},
+					{
+						"name": "State",
+						"type": "String"
+					},
+					{
+						"name": "ZipCode",
+						"type": "String"
+					},
+					{
+						"name": "CreatedDate",
+						"type": "String"
+					},
+					{
+						"name": "UpdatedDate",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_xa6')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "CosmosDb1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "CosmosDbSqlApiCollection",
+				"schema": {
+					"type": "object",
+					"properties": {
+						"actors": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									}
+								}
+							}
+						},
+						"availabilityDate": {
+							"type": "string"
+						},
+						"genre": {
+							"type": "string"
+						},
+						"rating": {
+							"type": "string"
+						},
+						"releaseYear": {
+							"type": "integer"
+						},
+						"runtime": {
+							"type": "integer"
+						},
+						"streamingAvailabilityDate": {
+							"type": "string"
+						},
+						"tier": {
+							"type": "integer"
+						},
+						"title": {
+							"type": "string"
+						}
+					}
+				},
+				"typeProperties": {
+					"collectionName": "movies"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SourceDataset_xwu')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -946,6 +1066,186 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Copy_dl_stream_addresses')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_r2a",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "dlcloudstreaming//dboAddresses.txt"
+							},
+							{
+								"name": "Destination",
+								"value": ".stream_addresses"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings",
+									"skipLineCount": 0
+								}
+							},
+							"sink": {
+								"type": "SqlDWSink",
+								"tableOption": "autoCreate"
+							},
+							"enableStaging": true,
+							"stagingSettings": {
+								"linkedServiceName": {
+									"referenceName": "azuredatalakegen2linked",
+									"type": "LinkedServiceReference"
+								}
+							},
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "AddressID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "AddressID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CustomerID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "CustomerID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AddressLine1",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "AddressLine1",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "AddressLine2",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "AddressLine2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "City",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "City",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "State",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "State",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ZipCode",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "ZipCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CreatedDate",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "CreatedDate",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "UpdatedDate",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "UpdatedDate",
+											"type": "String"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_r2a",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DestinationDataset_r2a",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/TestOrderDetailsCopy')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1816,119 +2116,12 @@
 				],
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_xa6')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SourceDataset_5ye')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileServercoffee",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "FileServerLocation"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "ActorID",
-						"type": "String"
-					},
-					{
-						"name": "ActorName",
-						"type": "String"
-					},
-					{
-						"name": "Gender",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/FileServercoffee')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_8tk')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "onPremSQL",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"cw_schema": {
-						"type": "String"
-					},
-					"cw_table": {
-						"type": "String"
-					}
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": {
-						"value": "@dataset().cw_schema",
-						"type": "Expression"
-					},
-					"table": {
-						"value": "@dataset().cw_table",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/onPremSQL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_akl')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "onPremSQL",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"cw_schema": {
-						"type": "String"
-					},
-					"cw_table": {
-						"type": "String"
-					}
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": {
-						"value": "@dataset().cw_schema",
-						"type": "Expression"
-					},
-					"table": {
-						"value": "@dataset().cw_table",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/onPremSQL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_tjl')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
