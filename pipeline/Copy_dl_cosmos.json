@@ -1,0 +1,241 @@
+{
+	"name": "Copy_dl_cosmos",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_whm",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "dlmovies//data_e76fbb97-d406-4651-931b-9865775650f5_45aceaac-62f5-4783-915d-c8b99398e423.txt"
+					},
+					{
+						"name": "Destination",
+						"value": ".cosmos_movies"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings",
+							"skipLineCount": 0
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "azuredatalakegen2linked",
+							"type": "LinkedServiceReference"
+						}
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "availabilityDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "availabilityDate",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "genre",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "genre",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "rating",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "rating",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "releaseYear",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "releaseYear",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "runtime",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "runtime",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "streamingAvailabilityDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "streamingAvailabilityDate",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "tier",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "tier",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "title",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "title",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "id",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "id",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "_rid",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "_rid",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "_self",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "_self",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "_etag",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "_etag",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "_attachments",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "_attachments",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "_ts",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "_ts",
+									"type": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_whm",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_whm",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
