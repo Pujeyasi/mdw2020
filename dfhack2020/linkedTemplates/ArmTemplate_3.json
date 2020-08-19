@@ -810,7 +810,7 @@
 							},
 							{
 								"name": "Destination",
-								"value": ".Azure Data Lake Storage Gen2 file"
+								"value": "cloudsales_addresses"
 							}
 						],
 						"typeProperties": {
