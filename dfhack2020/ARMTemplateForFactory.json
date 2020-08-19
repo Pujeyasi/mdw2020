@@ -61,873 +61,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/Copyadlsales_addresses')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy_5hd",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "dlcloudsales//dboAddresses.txt"
-							},
-							{
-								"name": "Destination",
-								"value": ".cloudsales"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings",
-									"skipLineCount": 0
-								}
-							},
-							"sink": {
-								"type": "SqlDWSink",
-								"tableOption": "autoCreate"
-							},
-							"enableStaging": true,
-							"stagingSettings": {
-								"linkedServiceName": {
-									"referenceName": "azuredatalakegen2linked",
-									"type": "LinkedServiceReference"
-								}
-							},
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "AddressID",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "AddressID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "CustomerID",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "CustomerID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "AddressLine1",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "AddressLine1",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "AddressLine2",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "AddressLine2",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "City",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "City",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "State",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "State",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "ZipCode",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "ZipCode",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "CreatedDate",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "CreatedDate",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "UpdatedDate",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "UpdatedDate",
-											"type": "String"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_5hd",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestinationDataset_5hd",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SourceDataset_5hd')]",
-				"[concat(variables('factoryId'), '/datasets/DestinationDataset_5hd')]",
-				"[concat(variables('factoryId'), '/linkedServices/azuredatalakegen2linked')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Copyadlscloudstreaming_addresses')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy_ahe",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "dlcloudstreaming//dboAddresses.txt"
-							},
-							{
-								"name": "Destination",
-								"value": ".cloudstreaming_addresses"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings",
-									"skipLineCount": 0
-								}
-							},
-							"sink": {
-								"type": "SqlDWSink",
-								"tableOption": "autoCreate"
-							},
-							"enableStaging": true,
-							"stagingSettings": {
-								"linkedServiceName": {
-									"referenceName": "azuredatalakegen2linked",
-									"type": "LinkedServiceReference"
-								}
-							},
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 1
-										},
-										"sink": {
-											"name": "Column1",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 2
-										},
-										"sink": {
-											"name": "Column2",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 3
-										},
-										"sink": {
-											"name": "Column3",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 4
-										},
-										"sink": {
-											"name": "Column4",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 5
-										},
-										"sink": {
-											"name": "Column5",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 6
-										},
-										"sink": {
-											"name": "Column6",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 7
-										},
-										"sink": {
-											"name": "Column7",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 8
-										},
-										"sink": {
-											"name": "Column8",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 9
-										},
-										"sink": {
-											"name": "Column9",
-											"type": "String"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_ahe",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestinationDataset_ahe",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SourceDataset_ahe')]",
-				"[concat(variables('factoryId'), '/datasets/DestinationDataset_ahe')]",
-				"[concat(variables('factoryId'), '/linkedServices/azuredatalakegen2linked')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Copycloudsalesaddresses')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy_x0z",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "dlcloudsales//dboAddresses.txt"
-							},
-							{
-								"name": "Destination",
-								"value": ".Azure Data Lake Storage Gen2 file"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings",
-									"skipLineCount": 0
-								}
-							},
-							"sink": {
-								"type": "SqlDWSink",
-								"tableOption": "autoCreate"
-							},
-							"enableStaging": true,
-							"stagingSettings": {
-								"linkedServiceName": {
-									"referenceName": "azuredatalakegen2linked",
-									"type": "LinkedServiceReference"
-								}
-							},
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "AddressID",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "AddressID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "CustomerID",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "CustomerID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "AddressLine1",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "AddressLine1",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "AddressLine2",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "AddressLine2",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "City",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "City",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "State",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "State",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "ZipCode",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "ZipCode",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "CreatedDate",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "CreatedDate",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "UpdatedDate",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "UpdatedDate",
-											"type": "String"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_x0z",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestinationDataset_x0z",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SourceDataset_x0z')]",
-				"[concat(variables('factoryId'), '/datasets/DestinationDataset_x0z')]",
-				"[concat(variables('factoryId'), '/linkedServices/azuredatalakegen2linked')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Copycustomers')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy_m35",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "dlcloudsales//dboCustomers.txt"
-							},
-							{
-								"name": "Destination",
-								"value": "customers.Azure Data Lake Storage Gen2 file"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings",
-									"skipLineCount": 0
-								}
-							},
-							"sink": {
-								"type": "SqlDWSink",
-								"tableOption": "autoCreate"
-							},
-							"enableStaging": true,
-							"stagingSettings": {
-								"linkedServiceName": {
-									"referenceName": "azuredatalakegen2linked",
-									"type": "LinkedServiceReference"
-								}
-							},
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "CustomerID",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "CustomerID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "LastName",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "LastName",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "FirstName",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "FirstName",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "PhoneNumber",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "PhoneNumber",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "CreatedDate",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "CreatedDate",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "UpdatedDate",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "UpdatedDate",
-											"type": "String"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_m35",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestinationDataset_m35",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SourceDataset_m35')]",
-				"[concat(variables('factoryId'), '/datasets/DestinationDataset_m35')]",
-				"[concat(variables('factoryId'), '/linkedServices/azuredatalakegen2linked')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Copyorderdetailsmain')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy_ffn",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "dlcloudsales//dboOrderDetails.txt"
-							},
-							{
-								"name": "Destination",
-								"value": "order_details.Azure Data Lake Storage Gen2 file"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings",
-									"skipLineCount": 0
-								}
-							},
-							"sink": {
-								"type": "SqlDWSink",
-								"tableOption": "autoCreate"
-							},
-							"enableStaging": true,
-							"stagingSettings": {
-								"linkedServiceName": {
-									"referenceName": "azuredatalakegen2linked",
-									"type": "LinkedServiceReference"
-								}
-							},
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "OrderDetailID",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "OrderDetailID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "OrderID",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "OrderID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "MovieID",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "MovieID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Quantity",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Quantity",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "UnitCost",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "UnitCost",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "LineNumber",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "LineNumber",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "CreatedDate",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "CreatedDate",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "UpdatedDate",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "UpdatedDate",
-											"type": "String"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_ffn",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestinationDataset_ffn",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SourceDataset_ffn')]",
-				"[concat(variables('factoryId'), '/datasets/DestinationDataset_ffn')]",
-				"[concat(variables('factoryId'), '/linkedServices/azuredatalakegen2linked')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/TestOrderDetailsCopy')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1109,13 +242,13 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/copyorderdetails')]",
+			"name": "[concat(parameters('factoryName'), '/copy_dl_sales_addresses')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy_4ts",
+						"name": "Copy_zcx",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -1128,11 +261,11 @@
 						"userProperties": [
 							{
 								"name": "Source",
-								"value": "dlcloudsales//dboOrders.txt"
+								"value": "dlcloudsales//dboAddresses.txt"
 							},
 							{
 								"name": "Destination",
-								"value": "order.Azure Data Lake Storage Gen2 file"
+								"value": ".Azure Data Lake Storage Gen2 file"
 							}
 						],
 						"typeProperties": {
@@ -1149,12 +282,6 @@
 							},
 							"sink": {
 								"type": "SqlDWSink",
-								"allowPolyBase": true,
-								"polyBaseSettings": {
-									"rejectValue": 0,
-									"rejectType": "value",
-									"useTypeDefault": true
-								},
 								"tableOption": "autoCreate"
 							},
 							"enableStaging": true,
@@ -1169,18 +296,20 @@
 								"mappings": [
 									{
 										"source": {
-											"name": "OrderID",
-											"type": "String"
+											"name": "AddressID",
+											"type": "String",
+											"physicalType": "String"
 										},
 										"sink": {
-											"name": "OrderID",
+											"name": "AddressID",
 											"type": "String"
 										}
 									},
 									{
 										"source": {
 											"name": "CustomerID",
-											"type": "String"
+											"type": "String",
+											"physicalType": "String"
 										},
 										"sink": {
 											"name": "CustomerID",
@@ -1189,38 +318,64 @@
 									},
 									{
 										"source": {
-											"name": "OrderDate",
-											"type": "String"
+											"name": "AddressLine1",
+											"type": "String",
+											"physicalType": "String"
 										},
 										"sink": {
-											"name": "OrderDate",
+											"name": "AddressLine1",
 											"type": "String"
 										}
 									},
 									{
 										"source": {
-											"name": "ShipDate",
-											"type": "String"
+											"name": "AddressLine2",
+											"type": "String",
+											"physicalType": "String"
 										},
 										"sink": {
-											"name": "ShipDate",
+											"name": "AddressLine2",
 											"type": "String"
 										}
 									},
 									{
 										"source": {
-											"name": "TotalCost",
-											"type": "String"
+											"name": "City",
+											"type": "String",
+											"physicalType": "String"
 										},
 										"sink": {
-											"name": "TotalCost",
+											"name": "City",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "State",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "State",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ZipCode",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "ZipCode",
 											"type": "String"
 										}
 									},
 									{
 										"source": {
 											"name": "CreatedDate",
-											"type": "String"
+											"type": "String",
+											"physicalType": "String"
 										},
 										"sink": {
 											"name": "CreatedDate",
@@ -1230,26 +385,32 @@
 									{
 										"source": {
 											"name": "UpdatedDate",
-											"type": "String"
+											"type": "String",
+											"physicalType": "String"
 										},
 										"sink": {
 											"name": "UpdatedDate",
 											"type": "String"
 										}
 									}
-								]
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
 							}
 						},
 						"inputs": [
 							{
-								"referenceName": "SourceDataset_4ts",
+								"referenceName": "SourceDataset_zcx",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "DestinationDataset_4ts",
+								"referenceName": "DestinationDataset_zcx",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -1259,8 +420,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SourceDataset_4ts')]",
-				"[concat(variables('factoryId'), '/datasets/DestinationDataset_4ts')]",
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_zcx')]",
+				"[concat(variables('factoryId'), '/datasets/DestinationDataset_zcx')]",
 				"[concat(variables('factoryId'), '/linkedServices/azuredatalakegen2linked')]"
 			]
 		},
@@ -2770,6 +1931,27 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DestinationDataset_zcx')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSynapseAnalytics1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "",
+					"table": "Azure Data Lake Storage Gen2 file"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSynapseAnalytics1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/JoinedOrderandOrderDetails')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -3783,6 +2965,71 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_zcx')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "dboAddresses.txt",
+						"fileSystem": "dlcloudsales"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "AddressID",
+						"type": "String"
+					},
+					{
+						"name": "CustomerID",
+						"type": "String"
+					},
+					{
+						"name": "AddressLine1",
+						"type": "String"
+					},
+					{
+						"name": "AddressLine2",
+						"type": "String"
+					},
+					{
+						"name": "City",
+						"type": "String"
+					},
+					{
+						"name": "State",
+						"type": "String"
+					},
+					{
+						"name": "ZipCode",
+						"type": "String"
+					},
+					{
+						"name": "CreatedDate",
+						"type": "String"
+					},
+					{
+						"name": "UpdatedDate",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
 			]
 		},
 		{

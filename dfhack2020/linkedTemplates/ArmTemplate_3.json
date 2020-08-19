@@ -13,13 +13,13 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/Copyorderdetailsmain')]",
+			"name": "[concat(parameters('factoryName'), '/copy_dl_sales_addresses')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy_ffn",
+						"name": "Copy_zcx",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -32,11 +32,11 @@
 						"userProperties": [
 							{
 								"name": "Source",
-								"value": "dlcloudsales//dboOrderDetails.txt"
+								"value": "dlcloudsales//dboAddresses.txt"
 							},
 							{
 								"name": "Destination",
-								"value": "order_details.Azure Data Lake Storage Gen2 file"
+								"value": ".Azure Data Lake Storage Gen2 file"
 							}
 						],
 						"typeProperties": {
@@ -67,67 +67,78 @@
 								"mappings": [
 									{
 										"source": {
-											"name": "OrderDetailID",
+											"name": "AddressID",
 											"type": "String",
 											"physicalType": "String"
 										},
 										"sink": {
-											"name": "OrderDetailID",
+											"name": "AddressID",
 											"type": "String"
 										}
 									},
 									{
 										"source": {
-											"name": "OrderID",
+											"name": "CustomerID",
 											"type": "String",
 											"physicalType": "String"
 										},
 										"sink": {
-											"name": "OrderID",
+											"name": "CustomerID",
 											"type": "String"
 										}
 									},
 									{
 										"source": {
-											"name": "MovieID",
+											"name": "AddressLine1",
 											"type": "String",
 											"physicalType": "String"
 										},
 										"sink": {
-											"name": "MovieID",
+											"name": "AddressLine1",
 											"type": "String"
 										}
 									},
 									{
 										"source": {
-											"name": "Quantity",
+											"name": "AddressLine2",
 											"type": "String",
 											"physicalType": "String"
 										},
 										"sink": {
-											"name": "Quantity",
+											"name": "AddressLine2",
 											"type": "String"
 										}
 									},
 									{
 										"source": {
-											"name": "UnitCost",
+											"name": "City",
 											"type": "String",
 											"physicalType": "String"
 										},
 										"sink": {
-											"name": "UnitCost",
+											"name": "City",
 											"type": "String"
 										}
 									},
 									{
 										"source": {
-											"name": "LineNumber",
+											"name": "State",
 											"type": "String",
 											"physicalType": "String"
 										},
 										"sink": {
-											"name": "LineNumber",
+											"name": "State",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ZipCode",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "ZipCode",
 											"type": "String"
 										}
 									},
@@ -163,298 +174,14 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "SourceDataset_ffn",
+								"referenceName": "SourceDataset_zcx",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "DestinationDataset_ffn",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/TestOrderDetailsCopy')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy_tyg",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "dbo.OrderDetails"
-							},
-							{
-								"name": "Destination",
-								"value": "dlcloudsales//TestOrderDetails"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
-								}
-							},
-							"enableStaging": false,
-							"validateDataConsistency": false
-						},
-						"inputs": [
-							{
-								"referenceName": "SrcOrderDetails",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestOrderDetails",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/TestOrders')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy_xwu",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "dbo.Orders"
-							},
-							{
-								"name": "Destination",
-								"value": "dlcloudsales//TestOrders"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
-								}
-							},
-							"enableStaging": false,
-							"validateDataConsistency": false
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_xwu",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestinationDataset_xwu",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/copyorderdetails')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy_4ts",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "dlcloudsales//dboOrders.txt"
-							},
-							{
-								"name": "Destination",
-								"value": "order.Azure Data Lake Storage Gen2 file"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings",
-									"skipLineCount": 0
-								}
-							},
-							"sink": {
-								"type": "SqlDWSink",
-								"allowPolyBase": true,
-								"polyBaseSettings": {
-									"rejectValue": 0,
-									"rejectType": "value",
-									"useTypeDefault": true
-								},
-								"tableOption": "autoCreate"
-							},
-							"enableStaging": true,
-							"stagingSettings": {
-								"linkedServiceName": {
-									"referenceName": "azuredatalakegen2linked",
-									"type": "LinkedServiceReference"
-								}
-							},
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "OrderID",
-											"type": "String"
-										},
-										"sink": {
-											"name": "OrderID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "CustomerID",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CustomerID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "OrderDate",
-											"type": "String"
-										},
-										"sink": {
-											"name": "OrderDate",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "ShipDate",
-											"type": "String"
-										},
-										"sink": {
-											"name": "ShipDate",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "TotalCost",
-											"type": "String"
-										},
-										"sink": {
-											"name": "TotalCost",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "CreatedDate",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CreatedDate",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "UpdatedDate",
-											"type": "String"
-										},
-										"sink": {
-											"name": "UpdatedDate",
-											"type": "String"
-										}
-									}
-								]
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_4ts",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestinationDataset_4ts",
+								"referenceName": "DestinationDataset_zcx",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
