@@ -1,0 +1,16 @@
+{
+	"name": "DestinationDataset_x0z",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSynapseAnalytics1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "",
+			"table": "Azure Data Lake Storage Gen2 file"
+		}
+	}
+}
