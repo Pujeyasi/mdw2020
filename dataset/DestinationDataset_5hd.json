@@ -1,0 +1,16 @@
+{
+	"name": "DestinationDataset_5hd",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSynapseAnalytics1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "",
+			"table": "cloudsales"
+		}
+	}
+}
