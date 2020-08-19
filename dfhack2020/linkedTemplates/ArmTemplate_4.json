@@ -29,6 +29,113 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_xa6')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "CosmosDb1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "CosmosDbSqlApiCollection",
+				"schema": {
+					"type": "object",
+					"properties": {
+						"actors": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									}
+								}
+							}
+						},
+						"availabilityDate": {
+							"type": "string"
+						},
+						"genre": {
+							"type": "string"
+						},
+						"rating": {
+							"type": "string"
+						},
+						"releaseYear": {
+							"type": "integer"
+						},
+						"runtime": {
+							"type": "integer"
+						},
+						"streamingAvailabilityDate": {
+							"type": "string"
+						},
+						"tier": {
+							"type": "integer"
+						},
+						"title": {
+							"type": "string"
+						}
+					}
+				},
+				"typeProperties": {
+					"collectionName": "movies"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_xwu')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "OrderID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "CustomerID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "OrderDate",
+						"type": "date"
+					},
+					{
+						"name": "ShipDate",
+						"type": "date"
+					},
+					{
+						"name": "TotalCost",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "CreatedDate",
+						"type": "date"
+					},
+					{
+						"name": "UpdatedDate",
+						"type": "date"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Orders"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SourceDataset_y2i')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2219,344 +2326,6 @@
 						"outputs": [
 							{
 								"referenceName": "DestinationDataset_abv",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Copy_dl_stream_addresses')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy_r2a",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "dlcloudstreaming//dboAddresses.txt"
-							},
-							{
-								"name": "Destination",
-								"value": ".stream_addresses"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings",
-									"skipLineCount": 0
-								}
-							},
-							"sink": {
-								"type": "SqlDWSink",
-								"tableOption": "autoCreate"
-							},
-							"enableStaging": true,
-							"stagingSettings": {
-								"linkedServiceName": {
-									"referenceName": "azuredatalakegen2linked",
-									"type": "LinkedServiceReference"
-								}
-							},
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "AddressID",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "AddressID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "CustomerID",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "CustomerID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "AddressLine1",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "AddressLine1",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "AddressLine2",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "AddressLine2",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "City",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "City",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "State",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "State",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "ZipCode",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "ZipCode",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "CreatedDate",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "CreatedDate",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "UpdatedDate",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "UpdatedDate",
-											"type": "String"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_r2a",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestinationDataset_r2a",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Copy_dl_stream_transactions')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy_9zf",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "dlcloudstreaming//dboTransactions.txt"
-							},
-							{
-								"name": "Destination",
-								"value": ".stream_transactions"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings",
-									"skipLineCount": 0
-								}
-							},
-							"sink": {
-								"type": "SqlDWSink",
-								"tableOption": "autoCreate"
-							},
-							"enableStaging": true,
-							"stagingSettings": {
-								"linkedServiceName": {
-									"referenceName": "azuredatalakegen2linked",
-									"type": "LinkedServiceReference"
-								}
-							},
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "TransactionID",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "TransactionID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "CustomerID",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "CustomerID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "MovieID",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "MovieID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "StreamStart",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "StreamStart",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "StreamEnd",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "StreamEnd",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "CreatedDate",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "CreatedDate",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "UpdatedDate",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "UpdatedDate",
-											"type": "String"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_9zf",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestinationDataset_9zf",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
