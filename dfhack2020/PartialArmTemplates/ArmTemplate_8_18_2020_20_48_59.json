@@ -1,0 +1,261 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "dfhack2020"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Copyadlscloudstreaming_addresses')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_ahe",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "dlcloudstreaming//dboAddresses.txt"
+							},
+							{
+								"name": "Destination",
+								"value": ".cloudstreaming_addresses"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings",
+									"skipLineCount": 0
+								}
+							},
+							"sink": {
+								"type": "SqlDWSink",
+								"tableOption": "autoCreate"
+							},
+							"enableStaging": true,
+							"stagingSettings": {
+								"linkedServiceName": {
+									"referenceName": "azuredatalakegen2linked",
+									"type": "LinkedServiceReference"
+								}
+							},
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"type": "String",
+											"ordinal": 1
+										},
+										"sink": {
+											"name": "Column1",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"ordinal": 2
+										},
+										"sink": {
+											"name": "Column2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"ordinal": 3
+										},
+										"sink": {
+											"name": "Column3",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"ordinal": 4
+										},
+										"sink": {
+											"name": "Column4",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"ordinal": 5
+										},
+										"sink": {
+											"name": "Column5",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"ordinal": 6
+										},
+										"sink": {
+											"name": "Column6",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"ordinal": 7
+										},
+										"sink": {
+											"name": "Column7",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"ordinal": 8
+										},
+										"sink": {
+											"name": "Column8",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"ordinal": 9
+										},
+										"sink": {
+											"name": "Column9",
+											"type": "String"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_ahe",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DestinationDataset_ahe",
+								"type": "DatasetReference"
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_ahe')]",
+				"[concat(variables('factoryId'), '/datasets/DestinationDataset_ahe')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DestinationDataset_ahe')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSynapseAnalytics1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "",
+					"table": "cloudstreaming_addresses"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_ahe')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "dboAddresses.txt",
+						"fileSystem": "dlcloudstreaming"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": false,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		}
+	]
+}

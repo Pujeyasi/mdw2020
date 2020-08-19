@@ -13,6 +13,522 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/copyorderdetails')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_4ts",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "dlcloudsales//dboOrders.txt"
+							},
+							{
+								"name": "Destination",
+								"value": "order.Azure Data Lake Storage Gen2 file"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings",
+									"skipLineCount": 0
+								}
+							},
+							"sink": {
+								"type": "SqlDWSink",
+								"allowPolyBase": true,
+								"polyBaseSettings": {
+									"rejectValue": 0,
+									"rejectType": "value",
+									"useTypeDefault": true
+								},
+								"tableOption": "autoCreate"
+							},
+							"enableStaging": true,
+							"stagingSettings": {
+								"linkedServiceName": {
+									"referenceName": "azuredatalakegen2linked",
+									"type": "LinkedServiceReference"
+								}
+							},
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "OrderID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "OrderID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CustomerID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CustomerID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "OrderDate",
+											"type": "String"
+										},
+										"sink": {
+											"name": "OrderDate",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ShipDate",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ShipDate",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "TotalCost",
+											"type": "String"
+										},
+										"sink": {
+											"name": "TotalCost",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CreatedDate",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CreatedDate",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "UpdatedDate",
+											"type": "String"
+										},
+										"sink": {
+											"name": "UpdatedDate",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_4ts",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DestinationDataset_4ts",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dlcloudsales')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ForEach_cjr",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@pipeline().parameters.cw_items",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Copy_cjr",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [
+										{
+											"name": "Source",
+											"value": "@{item().source.schema}.@{item().source.table}"
+										},
+										{
+											"name": "Destination",
+											"value": "dlcloudsales//@{item().destination.fileName}"
+										}
+									],
+									"typeProperties": {
+										"source": {
+											"type": "AzureSqlSource",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "DelimitedTextSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "DelimitedTextWriteSettings",
+												"quoteAllText": true,
+												"fileExtension": ".txt"
+											}
+										},
+										"enableStaging": false,
+										"validateDataConsistency": false
+									},
+									"inputs": [
+										{
+											"referenceName": "SourceDataset_cjr",
+											"type": "DatasetReference",
+											"parameters": {
+												"cw_schema": "@item().source.schema",
+												"cw_table": "@item().source.table"
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "DestinationDataset_cjr",
+											"type": "DatasetReference",
+											"parameters": {
+												"cw_fileName": "@item().destination.fileName"
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"parameters": {
+					"cw_items": {
+						"type": "Array",
+						"defaultValue": [
+							{
+								"source": {
+									"schema": "dbo",
+									"table": "Addresses"
+								},
+								"destination": {
+									"fileName": "dboAddresses.txt"
+								}
+							},
+							{
+								"source": {
+									"schema": "dbo",
+									"table": "Customers"
+								},
+								"destination": {
+									"fileName": "dboCustomers.txt"
+								}
+							},
+							{
+								"source": {
+									"schema": "dbo",
+									"table": "OrderDetails"
+								},
+								"destination": {
+									"fileName": "dboOrderDetails.txt"
+								}
+							},
+							{
+								"source": {
+									"schema": "dbo",
+									"table": "Orders"
+								},
+								"destination": {
+									"fileName": "dboOrders.txt"
+								}
+							},
+							{
+								"source": {
+									"schema": "Hidden",
+									"table": "Addresses"
+								},
+								"destination": {
+									"fileName": "HiddenAddresses.txt"
+								}
+							},
+							{
+								"source": {
+									"schema": "Hidden",
+									"table": "AddressUpdates"
+								},
+								"destination": {
+									"fileName": "HiddenAddressUpdates.txt"
+								}
+							},
+							{
+								"source": {
+									"schema": "Hidden",
+									"table": "Customers"
+								},
+								"destination": {
+									"fileName": "HiddenCustomers.txt"
+								}
+							},
+							{
+								"source": {
+									"schema": "Hidden",
+									"table": "CustomerUpdates"
+								},
+								"destination": {
+									"fileName": "HiddenCustomerUpdates.txt"
+								}
+							},
+							{
+								"source": {
+									"schema": "Hidden",
+									"table": "OrderDetails"
+								},
+								"destination": {
+									"fileName": "HiddenOrderDetails.txt"
+								}
+							},
+							{
+								"source": {
+									"schema": "Hidden",
+									"table": "Orders"
+								},
+								"destination": {
+									"fileName": "HiddenOrders.txt"
+								}
+							},
+							{
+								"source": {
+									"schema": "Hidden",
+									"table": "OrderUpdates"
+								},
+								"destination": {
+									"fileName": "HiddenOrderUpdates.txt"
+								}
+							}
+						]
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dlcloudstreaming')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ForEach_gnj",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@pipeline().parameters.cw_items",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Copy_gnj",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [
+										{
+											"name": "Source",
+											"value": "@{item().source.schema}.@{item().source.table}"
+										},
+										{
+											"name": "Destination",
+											"value": "dlcloudstreaming//@{item().destination.fileName}"
+										}
+									],
+									"typeProperties": {
+										"source": {
+											"type": "AzureSqlSource",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "DelimitedTextSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "DelimitedTextWriteSettings",
+												"quoteAllText": true,
+												"fileExtension": ".txt"
+											}
+										},
+										"enableStaging": false,
+										"validateDataConsistency": false
+									},
+									"inputs": [
+										{
+											"referenceName": "SourceDataset_gnj",
+											"type": "DatasetReference",
+											"parameters": {
+												"cw_schema": "@item().source.schema",
+												"cw_table": "@item().source.table"
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "DestinationDataset_gnj",
+											"type": "DatasetReference",
+											"parameters": {
+												"cw_fileName": "@item().destination.fileName"
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"parameters": {
+					"cw_items": {
+						"type": "Array",
+						"defaultValue": [
+							{
+								"source": {
+									"schema": "dbo",
+									"table": "Addresses"
+								},
+								"destination": {
+									"fileName": "dboAddresses.txt"
+								}
+							},
+							{
+								"source": {
+									"schema": "dbo",
+									"table": "Customers"
+								},
+								"destination": {
+									"fileName": "dboCustomers.txt"
+								}
+							},
+							{
+								"source": {
+									"schema": "dbo",
+									"table": "Transactions"
+								},
+								"destination": {
+									"fileName": "dboTransactions.txt"
+								}
+							},
+							{
+								"source": {
+									"schema": "Hidden",
+									"table": "Addresses"
+								},
+								"destination": {
+									"fileName": "HiddenAddresses.txt"
+								}
+							},
+							{
+								"source": {
+									"schema": "Hidden",
+									"table": "AddressUpdates"
+								},
+								"destination": {
+									"fileName": "HiddenAddressUpdates.txt"
+								}
+							},
+							{
+								"source": {
+									"schema": "Hidden",
+									"table": "Customers"
+								},
+								"destination": {
+									"fileName": "HiddenCustomers.txt"
+								}
+							},
+							{
+								"source": {
+									"schema": "Hidden",
+									"table": "CustomerUpdates"
+								},
+								"destination": {
+									"fileName": "HiddenCustomerUpdates.txt"
+								}
+							},
+							{
+								"source": {
+									"schema": "Hidden",
+									"table": "Transactions"
+								},
+								"destination": {
+									"fileName": "HiddenTransactions.txt"
+								}
+							},
+							{
+								"source": {
+									"schema": "Hidden",
+									"table": "TransactionUpdates"
+								},
+								"destination": {
+									"fileName": "HiddenTransactionUpdates.txt"
+								}
+							}
+						]
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/dlmovies')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
