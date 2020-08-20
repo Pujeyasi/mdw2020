@@ -73,7 +73,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "dlcloudsales",
+								"referenceName": "copy_sales_orders_only",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
@@ -126,7 +126,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/dlcloudsales')]",
+				"[concat(variables('factoryId'), '/pipelines/copy_sales_orders_only')]",
 				"[concat(variables('factoryId'), '/pipelines/Copy_dl_sales_orders')]",
 				"[concat(variables('factoryId'), '/pipelines/loadfactsales')]"
 			]
