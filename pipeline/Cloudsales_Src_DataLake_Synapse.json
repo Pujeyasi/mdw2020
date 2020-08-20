@@ -1,5 +1,5 @@
 {
-	"name": "Cloudsales_Src_DataLake",
+	"name": "Cloudsales_Src_DataLake_Synapse",
 	"properties": {
 		"activities": [
 			{
@@ -10,6 +10,26 @@
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "dlcloudsales",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Load_dl_sales_orders",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "load_all_cloudsales",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Copy_dl_sales_orders",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
