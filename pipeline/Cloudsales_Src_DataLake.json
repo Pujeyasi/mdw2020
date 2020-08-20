@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "Cloudsales_Src_DataLake",
 	"properties": {
 		"activities": [
 			{
@@ -8,6 +8,10 @@
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
+					"pipeline": {
+						"referenceName": "dlcloudsales",
+						"type": "PipelineReference"
+					},
 					"waitOnCompletion": true
 				}
 			}
