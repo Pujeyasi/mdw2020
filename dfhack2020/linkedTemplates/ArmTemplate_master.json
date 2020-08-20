@@ -183,15 +183,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"FileServercoffee_password": {
-						"value": "[parameters('FileServercoffee_password')]"
-					},
-					"FileServercoffee_properties_typeProperties_host": {
-						"value": "[parameters('FileServercoffee_properties_typeProperties_host')]"
-					},
-					"FileServercoffee_properties_typeProperties_userId": {
-						"value": "[parameters('FileServercoffee_properties_typeProperties_userId')]"
 					}
 				}
 			},
@@ -213,8 +204,17 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"FileServercoffee_password": {
+						"value": "[parameters('FileServercoffee_password')]"
+					},
 					"onPremSQL_connectionString": {
 						"value": "[parameters('onPremSQL_connectionString')]"
+					},
+					"FileServercoffee_properties_typeProperties_host": {
+						"value": "[parameters('FileServercoffee_properties_typeProperties_host')]"
+					},
+					"FileServercoffee_properties_typeProperties_userId": {
+						"value": "[parameters('FileServercoffee_properties_typeProperties_userId')]"
 					}
 				}
 			},
