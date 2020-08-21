@@ -7,13 +7,13 @@
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "Lookup1",
+						"activity": "Source_Rowcount",
 						"dependencyConditions": [
 							"Succeeded"
 						]
 					},
 					{
-						"activity": "Lookup2",
+						"activity": "Fact_Rowcount",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -43,7 +43,7 @@
 				}
 			},
 			{
-				"name": "Lookup1",
+				"name": "Source_Rowcount",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -68,7 +68,7 @@
 				}
 			},
 			{
-				"name": "Lookup2",
+				"name": "Fact_Rowcount",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -93,7 +93,27 @@
 				}
 			},
 			{
-				"name": "Web1",
+				"name": "Pass",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "If Condition1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": []
+			},
+			{
+				"name": "Fail",
 				"type": "WebActivity",
 				"dependsOn": [
 					{
