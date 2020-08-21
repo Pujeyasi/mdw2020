@@ -113,7 +113,8 @@
 				"userProperties": [],
 				"typeProperties": {
 					"url": "https://microsoft.com",
-					"method": "POST"
+					"method": "POST",
+					"body": "Pass"
 				}
 			},
 			{
@@ -137,7 +138,8 @@
 				"userProperties": [],
 				"typeProperties": {
 					"url": "https://microsoft.com",
-					"method": "POST"
+					"method": "POST",
+					"body": "Fail"
 				}
 			}
 		],
