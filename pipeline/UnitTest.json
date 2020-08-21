@@ -22,7 +22,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "IF int(Lookup1.output) - int(lookup2.output) = 0",
+						"value": "If 1 = 1",
 						"type": "Expression"
 					},
 					"ifTrueActivities": [
