@@ -112,7 +112,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"url": "https://microssoft.com",
+					"url": "https://microsoft.com",
 					"method": "POST"
 				}
 			},
@@ -136,7 +136,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"url": "https://microssoft.com",
+					"url": "https://microsoft.com",
 					"method": "POST"
 				}
 			}
