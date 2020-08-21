@@ -110,7 +110,11 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://microssoft.com",
+					"method": "POST"
+				}
 			},
 			{
 				"name": "Fail",
@@ -130,7 +134,11 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://microssoft.com",
+					"method": "POST"
+				}
 			}
 		],
 		"annotations": []
