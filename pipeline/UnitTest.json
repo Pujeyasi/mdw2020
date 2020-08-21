@@ -37,7 +37,12 @@
 								"secureOutput": false,
 								"secureInput": false
 							},
-							"userProperties": []
+							"userProperties": [],
+							"typeProperties": {
+								"url": "http://www.microsoft.com",
+								"method": "POST",
+								"body": "Pass"
+							}
 						}
 					]
 				}
